@@ -14,7 +14,7 @@ con <- RPostgreSQL::dbConnect(PostgreSQL(),
 
 # Read and process moorings data 
 moorings <- read.table("C:\\skh\\MooringSiteMetaData.txt", sep = ",")
-colnames(moorings) <- c("mooring_site_id", "mooring_site_id_full", "latitude", "longitude", "mystery_field")
+colnames(moorings) <- c("mooring_site_id", "mooring_site_id_full", "latitude", "longitude", "water_depth_m")
 
 RPostgreSQL::dbWriteTable(con, c("acoustics", "geo_moorings"), moorings, append = TRUE, row.names = FALSE)
 RPostgreSQL::dbSendQuery(con, "UPDATE acoustics.geo_moorings SET geom = ST_SetSRID(ST_MakePoint(longitude, latitude), 4326)")
